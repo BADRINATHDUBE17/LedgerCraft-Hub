@@ -7,12 +7,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { LockKeyhole, Mail, User, Building } from "lucide-react";
+import { LockKeyhole, Mail, User, Building, UserCircle2 } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [adminId, setAdminId] = useState("");
   const [loginType, setLoginType] = useState("admin");
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -25,6 +26,16 @@ const Login = () => {
       toast({
         title: "Error",
         description: "Please fill in all fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Admin-specific validation
+    if (loginType === "admin" && !adminId) {
+      toast({
+        title: "Error",
+        description: "Admin ID is required for admin login",
         variant: "destructive",
       });
       return;
@@ -82,6 +93,22 @@ const Login = () => {
               <TabsContent key={type} value={type}>
                 <form onSubmit={handleLogin}>
                   <CardContent className="space-y-4 pt-4">
+                    {type === "admin" && (
+                      <div className="space-y-2">
+                        <Label htmlFor="adminId">Admin ID</Label>
+                        <div className="relative">
+                          <UserCircle2 className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            id="adminId"
+                            placeholder="Enter admin ID"
+                            value={adminId}
+                            onChange={(e) => setAdminId(e.target.value)}
+                            className="pl-10"
+                          />
+                        </div>
+                      </div>
+                    )}
+                    
                     {type === "company" && (
                       <div className="space-y-2">
                         <Label htmlFor="company">Company ID</Label>
