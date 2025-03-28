@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -12,8 +11,8 @@ import logo from "@/assets/logo.png";
 
 const Login = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [adminId, setAdminId] = useState("");
+  const [password, setPassword] = useState("NIDI");
+  const [adminId, setAdminId] = useState("NIDI");
   const [loginType, setLoginType] = useState("admin");
   const { toast } = useToast();
   const navigate = useNavigate();
